@@ -26,7 +26,7 @@ import javax.transaction.UserTransaction;
  * @Website : https://cunyu1943.github.io
  * @Description :
  */
-@Configuration
+//@Configuration
 public class TransactionManagerConfig {
 
     @Bean

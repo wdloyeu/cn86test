@@ -25,7 +25,7 @@ import javax.sql.DataSource;
  * @Website : https://cunyu1943.github.io
  * @Description :
  */
-@Configuration
+//@Configuration
 public class DataSourceConfig {
 
     @Primary
