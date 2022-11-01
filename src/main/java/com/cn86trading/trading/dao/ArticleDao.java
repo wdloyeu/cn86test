@@ -26,9 +26,12 @@ import java.util.List;
 public class ArticleDao {
 
     @Resource
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate primaryJdbcTemplate;
 
-    public void saveArticle(Article article) {
+    public void saveArticle(Article article, JdbcTemplate jdbcTemplate) {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = primaryJdbcTemplate;
+        }
         jdbcTemplate.update("INSERT INTO article(author, title, content, create_time) VALUES(?, ?, ?, ?)",
             article.getAuthor(),
             article.getTitle(),
@@ -36,7 +39,10 @@ public class ArticleDao {
             article.getCreateTime());
     }
 
-    public void updateArticle(Article article) {
+    public void updateArticle(Article article, JdbcTemplate jdbcTemplate) {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = primaryJdbcTemplate;
+        }
         jdbcTemplate.update("update article set author=?, title=?, content=?, create_time=? where id=?",
             article.getAuthor(),
             article.getTitle(),
@@ -45,19 +51,28 @@ public class ArticleDao {
             article.getId());
     }
 
-    public void deleteArticle(Long id) {
+    public void deleteArticle(Long id, JdbcTemplate jdbcTemplate) {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = primaryJdbcTemplate;
+        }
         jdbcTemplate.update("delete from article where id=?",
                 id);
     }
 
-    public Article getArticle(Long id) {
+    public Article getArticle(Long id, JdbcTemplate jdbcTemplate) {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = primaryJdbcTemplate;
+        }
 //        return (Article) jdbcTemplate.queryForObject("SELECT * FROM article WHERE id=?",
 //                new Object[]{id},new BeanPropertyRowMapper<>(Article.class));
         Article article = jdbcTemplate.queryForObject("SELECT * FROM article WHERE id=?", new BeanPropertyRowMapper<>(Article.class), id);
         return article;
     }
 
-    public List<Article> getArticleList() {
+    public List<Article> getArticleList(JdbcTemplate jdbcTemplate) {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = primaryJdbcTemplate;
+        }
         return jdbcTemplate.query("select * from article", new BeanPropertyRowMapper<>(Article.class));
     }
 }
