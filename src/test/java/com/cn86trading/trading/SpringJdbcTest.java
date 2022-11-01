@@ -60,7 +60,7 @@ public class SpringJdbcTest {
     @Test
     public void testServiceJdbc() {
         articleService.saveArticle(Article.builder()
-                .author("zixxxmug").title("xxxxxx").content("yyyy").createTime(new Date())
+                .author("士大夫").title("开裆裤").content("受到了开始了").createTime(new Date())
                 .build());
     }
 }

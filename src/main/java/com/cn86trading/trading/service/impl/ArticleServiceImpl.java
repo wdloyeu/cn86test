@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
     public void saveArticle(Article article) {
         articleDao.saveArticle(article, null);
         articleDao.saveArticle(article, secondaryJdbcTemplate);
-        int a=1/0;
+//        int a=1/0;
 
     }
 
