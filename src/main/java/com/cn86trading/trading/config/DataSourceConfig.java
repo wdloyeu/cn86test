@@ -28,28 +28,28 @@ import javax.sql.DataSource;
 //@Configuration
 public class DataSourceConfig {
 
-    @Primary
-    @Bean(initMethod = "init", destroyMethod = "close", name = "primaryDataSource")
-    @ConfigurationProperties(prefix = "primarydb")
-    public DataSource primaryDataSource() {
-        return new AtomikosDataSourceBean();
-    }
-
-    @Bean(initMethod = "init", destroyMethod = "close", name = "secondaryDataSource")
-    @ConfigurationProperties(prefix = "secondarydb")
-    public DataSource secondaryDataSource() {
-        return new AtomikosDataSourceBean();
-    }
-
-    @Bean(name = "primaryJdbcTemplate")
-    public JdbcTemplate primaryJdbcTemplate(@Qualifier("primaryDataSource") DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
-
-    @Bean(name = "secondaryJdbcTemplate")
-    public JdbcTemplate secondaryJdbcTemplate(@Qualifier("secondaryDataSource") DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
+//    @Primary
+//    @Bean(initMethod = "init", destroyMethod = "close", name = "primaryDataSource")
+//    @ConfigurationProperties(prefix = "primarydb")
+//    public DataSource primaryDataSource() {
+//        return new AtomikosDataSourceBean();
+//    }
+//
+//    @Bean(initMethod = "init", destroyMethod = "close", name = "secondaryDataSource")
+//    @ConfigurationProperties(prefix = "secondarydb")
+//    public DataSource secondaryDataSource() {
+//        return new AtomikosDataSourceBean();
+//    }
+//
+//    @Bean(name = "primaryJdbcTemplate")
+//    public JdbcTemplate primaryJdbcTemplate(@Qualifier("primaryDataSource") DataSource dataSource) {
+//        return new JdbcTemplate(dataSource);
+//    }
+//
+//    @Bean(name = "secondaryJdbcTemplate")
+//    public JdbcTemplate secondaryJdbcTemplate(@Qualifier("secondaryDataSource") DataSource dataSource) {
+//        return new JdbcTemplate(dataSource);
+//    }
 //    @Primary
 //    @Bean(name = "primaryDataSource")
 //    @ConfigurationProperties(prefix = "spring.datasource.primary")

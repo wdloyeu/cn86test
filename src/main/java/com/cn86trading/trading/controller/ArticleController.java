@@ -1,17 +1,23 @@
 package com.cn86trading.trading.controller;
 
+import com.cn86trading.trading.config.ModelView;
+import com.cn86trading.trading.exception.CustomException;
+import com.cn86trading.trading.exception.CustomExceptionType;
 import com.cn86trading.trading.model.AjaxResponse;
-import com.cn86trading.trading.model.Article;
+import com.cn86trading.trading.model.ArticleVo;
 import com.cn86trading.trading.model.Family;
 import com.cn86trading.trading.service.ArticleService;
 import com.cn86trading.trading.service.TestBeanService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,14 +63,14 @@ public class ArticleController {
     }
 
     @PostMapping("/articles")
-    public AjaxResponse saveArticle(@RequestBody Article article) {
+    public AjaxResponse saveArticle(@Valid @RequestBody ArticleVo article) {
         articleService.saveArticle(article);
         log.info("saveArticle: " + article);
         return AjaxResponse.success();
     }
 
     @PutMapping("/articles")
-    public AjaxResponse updateArticle(@RequestBody Article article) {
+    public AjaxResponse updateArticle(@RequestBody ArticleVo article) {
         if (article.getId() == null) {
 
         }
@@ -83,5 +89,18 @@ public class ArticleController {
     @GetMapping("/articles")
     public AjaxResponse getAll() {
         return AjaxResponse.success(articleService.getArticleList());
+    }
+
+
+
+    @ModelView
+    @GetMapping("/freemarker")
+    public String index(Model model) {
+        if (1 == 1) {
+            throw new CustomException(CustomExceptionType.SYSTEM_ERROR);
+        }
+        List<ArticleVo> articles = articleService.getArticleList();
+        model.addAttribute("articles", articles);
+        return "fremarkertemp";
     }
 }

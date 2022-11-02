@@ -1,7 +1,7 @@
-package com.cn86trading.trading.dao;
+package com.cn86trading.trading.dao.test;
 
-import com.cn86trading.trading.entity.Article;
-import com.cn86trading.trading.entity.ArticleExample;
+import com.cn86trading.trading.dao.test.Article;
+import com.cn86trading.trading.dao.test.ArticleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

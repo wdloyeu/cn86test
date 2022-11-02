@@ -1,5 +1,7 @@
 package com.cn86trading.trading.service;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -14,6 +16,7 @@ package com.cn86trading.trading.service;
  * @Website : https://cunyu1943.github.io
  * @Description :
  */
+@Service
 public class TestBeanService {
 
     public void printString(String name) {

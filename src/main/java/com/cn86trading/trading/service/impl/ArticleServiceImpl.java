@@ -1,12 +1,13 @@
 package com.cn86trading.trading.service.impl;
 
-import com.cn86trading.trading.dao.ArticleDao;
-import com.cn86trading.trading.dao.ArticleMapper;
-import com.cn86trading.trading.model.Article;
+import com.cn86trading.trading.dao.test.Article;
+import com.cn86trading.trading.dao.test.ArticleMapper;
+import com.cn86trading.trading.dao.test2.Message;
+import com.cn86trading.trading.dao.test2.MessageMapper;
+import com.cn86trading.trading.model.ArticleVo;
 import com.cn86trading.trading.service.ArticleService;
 import com.cn86trading.trading.utils.DozerUtils;
 import com.github.dozermapper.core.Mapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,30 +35,42 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Resource
-    private Mapper dozerMapper;
+    private MessageMapper messageMapper;
 
     @Resource
-    private ArticleDao articleDao;
+    private Mapper dozerMapper;
+
+//    @Resource
+//    private ArticleDao articleDao;
 
 //    @Resource
 //    private JdbcTemplate secondaryJdbcTemplate;
 
     @Override
     @Transactional
-    public void saveArticle(Article article) {
+    public void saveArticle(ArticleVo articleVo) {
 //        articleDao.saveArticle(article, null);
 //        articleDao.saveArticle(article, secondaryJdbcTemplate);
 //        int a=1/0;
-        com.cn86trading.trading.entity.Article article1 = dozerMapper.map(articleDao, com.cn86trading.trading.entity.Article.class);
-        articleMapper.insertSelective(article1);
+        Article article = dozerMapper.map(articleVo, Article.class);
+        articleMapper.insertSelective(article);
+
+        Message message = new Message();
+        message.setName("kobe");
+        message.setContent("退役啦");
+        messageMapper.insertSelective(message);
+
+        //int a = 2/0;     //认为制造被除数为0的异常
+
+//        articleMapper.insertSelective(article1);
 
     }
 
     @Override
-    public void updateArticle(Article article) {
+    public void updateArticle(ArticleVo article) {
 //        articleDao.updateArticle(article, secondaryJdbcTemplate);
-        com.cn86trading.trading.entity.Article article1 = dozerMapper.map(articleDao, com.cn86trading.trading.entity.Article.class);
-        articleMapper.updateByPrimaryKeySelective(article1);
+//        com.cn86trading.trading.entity.Article article1 = dozerMapper.map(articleDao, com.cn86trading.trading.entity.Article.class);
+//        articleMapper.updateByPrimaryKeySelective(article1);
     }
 
     @Override
@@ -67,15 +80,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Article getArticle(Long id) {
+    public ArticleVo getArticle(Long id) {
 //        return articleDao.getArticle(id, secondaryJdbcTemplate);
-        return dozerMapper.map(articleMapper.selectByPrimaryKey(id.intValue()), Article.class);
+        return dozerMapper.map(articleMapper.selectByPrimaryKey(id.intValue()), ArticleVo.class);
     }
 
     @Override
-    public List<Article> getArticleList() {
-        List<com.cn86trading.trading.entity.Article> articles = articleMapper.selectByExample(null);
-        return DozerUtils.mapList(articles, Article.class);
+    public List<ArticleVo> getArticleList() {
+        List<Article> articles = articleMapper.selectByExample(null);
+        return DozerUtils.mapList(articles, ArticleVo.class);
 //        return articleDao.getArticleList(secondaryJdbcTemplate);
     }
 

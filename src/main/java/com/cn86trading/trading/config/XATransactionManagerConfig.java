@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
-import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;
 
@@ -19,36 +19,35 @@ import javax.transaction.UserTransaction;
  * @version : 1.0
  * @Project : CN86
  * @Package : com.cn86trading.trading.config
- * @ClassName : TransactionManagerConfig.java
- * @createTime : 2022/11/1 18:07
+ * @ClassName : XATransactionManagerConfig .java
+ * @createTime : 2022/11/2 9:33
  * @Email : 747731461@qq.com
  * @公众号 : 小黑侠
  * @Website : https://cunyu1943.github.io
  * @Description :
  */
-//@Configuration
-public class TransactionManagerConfig {
+@Configuration
+@EnableTransactionManagement
+public class XATransactionManagerConfig {
 
-    @Bean
-    public UserTransaction userTransaction() throws SystemException {
+    //User事务
+    @Bean(name = "userTransaction")
+    public UserTransaction userTransaction() throws Throwable {
         UserTransactionImp userTransactionImp = new UserTransactionImp();
         userTransactionImp.setTransactionTimeout(10000);
         return userTransactionImp;
     }
-
+    //分布式事务
     @Bean(name = "atomikosTransactionManager", initMethod = "init", destroyMethod = "close")
     public TransactionManager atomikosTransactionManager() throws Throwable {
         UserTransactionManager userTransactionManager = new UserTransactionManager();
         userTransactionManager.setForceShutdown(false);
         return userTransactionManager;
     }
-
-//    @Bean(name = "transactionManager")
-//    @DependsOn({ "userTransaction", "atomikosTransactionManager" })
-//    public PlatformTransactionManager transactionManager() throws Throwable {
-//        UserTransaction userTransaction = userTransaction();
-//
-//        JtaTransactionManager manager = new JtaTransactionManager(userTransaction, atomikosTransactionManager());
-//        return manager;
-//    }
+    //事务管理器
+    @Bean(name = "transactionManager")
+    @DependsOn({ "userTransaction", "atomikosTransactionManager" })
+    public PlatformTransactionManager transactionManager() throws Throwable {
+        return new JtaTransactionManager(userTransaction(),atomikosTransactionManager());
+    }
 }

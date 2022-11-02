@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cn86trading.trading.dao.ArticleMapper">
-  <resultMap id="BaseResultMap" type="com.cn86trading.trading.entity.Article">
+<mapper namespace="com.cn86trading.trading.dao.test2.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.cn86trading.trading.dao.test2.Message">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="author" jdbcType="VARCHAR" property="author" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -67,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, author, title, content, create_time
+    id, `name`, content, create_time
   </sql>
-  <select id="selectByExample" parameterType="com.cn86trading.trading.entity.ArticleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.cn86trading.trading.dao.test2.MessageExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from article
+    from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,33 +93,30 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from article
+    from message
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from article
+    delete from message
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.cn86trading.trading.entity.ArticleExample">
-    delete from article
+  <delete id="deleteByExample" parameterType="com.cn86trading.trading.dao.test2.MessageExample">
+    delete from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cn86trading.trading.entity.Article" useGeneratedKeys="true">
-    insert into article (author, title, content, 
-      create_time)
-    values (#{author,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cn86trading.trading.dao.test2.Message" useGeneratedKeys="true">
+    insert into message (`name`, content, create_time
+      )
+    values (#{name,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cn86trading.trading.entity.Article" useGeneratedKeys="true">
-    insert into article
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cn86trading.trading.dao.test2.Message" useGeneratedKeys="true">
+    insert into message
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="author != null">
-        author,
-      </if>
-      <if test="title != null">
-        title,
+      <if test="name != null">
+        `name`,
       </if>
       <if test="content != null">
         content,
@@ -130,11 +126,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="author != null">
-        #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        #{title,jdbcType=VARCHAR},
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
@@ -144,23 +137,20 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cn86trading.trading.entity.ArticleExample" resultType="java.lang.Long">
-    select count(*) from article
+  <select id="countByExample" parameterType="com.cn86trading.trading.dao.test2.MessageExample" resultType="java.lang.Long">
+    select count(*) from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update article
+    update message
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.author != null">
-        author = #{record.author,jdbcType=VARCHAR},
-      </if>
-      <if test="record.title != null">
-        title = #{record.title,jdbcType=VARCHAR},
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
@@ -174,24 +164,20 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update article
+    update message
     set id = #{record.id,jdbcType=INTEGER},
-      author = #{record.author,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cn86trading.trading.entity.Article">
-    update article
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn86trading.trading.dao.test2.Message">
+    update message
     <set>
-      <if test="author != null">
-        author = #{author,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
@@ -202,10 +188,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cn86trading.trading.entity.Article">
-    update article
-    set author = #{author,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.cn86trading.trading.dao.test2.Message">
+    update message
+    set `name` = #{name,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

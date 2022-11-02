@@ -2,6 +2,7 @@ package com.cn86trading.trading;
 
 import com.cn86trading.trading.dao.ArticleDao;
 import com.cn86trading.trading.model.Article;
+import com.cn86trading.trading.model.ArticleVo;
 import com.cn86trading.trading.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -59,8 +60,8 @@ public class SpringJdbcTest {
 
     @Test
     public void testServiceJdbc() {
-        articleService.saveArticle(Article.builder()
-                .author("士大夫").title("开裆裤").content("受到了开始了").createTime(new Date())
+        articleService.saveArticle(ArticleVo.builder()
+                .author("士大33夫").title("开33裆裤").content("受到了开dd始了").createTime(new Date())
                 .build());
     }
 }

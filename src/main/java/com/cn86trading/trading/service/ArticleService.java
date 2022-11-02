@@ -1,6 +1,6 @@
 package com.cn86trading.trading.service;
 
-import com.cn86trading.trading.model.Article;
+import com.cn86trading.trading.model.ArticleVo;
 
 import java.util.List;
 
@@ -20,13 +20,13 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    void saveArticle(Article article);
+    void saveArticle(ArticleVo article);
 
-    void updateArticle(Article article);
+    void updateArticle(ArticleVo article);
 
     void deleteArticle(Long id);
 
-    Article getArticle(Long id);
+    ArticleVo getArticle(Long id);
 
-    List<Article> getArticleList();
+    List<ArticleVo> getArticleList();
 }
